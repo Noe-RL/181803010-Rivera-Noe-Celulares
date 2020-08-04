@@ -11,6 +11,8 @@
 <!DOCTYPE html>
 <%
     List<producto> producto = new productoBD().Indexproductos();
+    List<producto> catalogomarca = new productoBD().Indexmarcas();
+    List<color> colores = new colorBD().Indexcolores();
 
 %>
 <html><head>
@@ -38,12 +40,11 @@
           <a class="nav-link" href="pricing.jsp">Comprar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Opciones</a>
+          <a class="nav-link " href="stock.jsp" tabindex="-1" aria-disabled="true">Opciones</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+       
       </form>
     </div>
   </nav>
@@ -51,7 +52,7 @@
 
         <!-- INICIO DEL CONTENIDO REAL DE LA PAGINA -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>') </script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
 
         <div class="container">
 
@@ -69,6 +70,7 @@
                         <th scope="col">Modelo</th>
                         <th scope="col">Color</th>
                         <th scope="col">Marca</th>
+                        <th scope="col">Precio</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -79,15 +81,15 @@
                         <td><%=productos.getModelo()%></td>
                         <td><%=productos.getColor()%></td>
                         <td><%=productos.getMarca()%></td>
-                        <td width="100px" class="text-left"><div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-dark active">
-                                    <a  href="editfront.jsp?id=<%=productos.getId_celular()%>"></a><i class="fas fa-edit"></i>
-                                </label>
-                                <label class="btn btn-danger">
-                                    <a  href="deletefront.jsp?id=<%=productos.getId_celular()%>"></a><i class="fas fa-trash-alt"></i>
-                                </label>
+                        <td>$<%=productos.getPrecio()%></td>
+                        <td width="100px" class="text-left">
+                                
+                                    <a class="btn btn-dark active"  href="editfront.jsp?id=<%=productos.getId_celular()%>"><i class="fas fa-edit"></i> </a>
+                         
+                                    <a class="btn btn-danger"  href="deletefront.jsp?id=<%=productos.getId_celular()%>"><i class="fas fa-trash-alt"></i> </a>
+                                
 
-                            </div></td>
+                            </td>
 
 
                     </tr>
@@ -105,28 +107,59 @@
                     <tr class="text-center">
                         <th scope="col">No.</th>
                         <th scope="col">Marca   </th>
-                        
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <%for (producto marcas : producto) {%>
+                    <%for (producto marcas : catalogomarca) {%>
                     <tr class="text-center"> <td><%=marcas.getId_marca()%></td>
-                <td><%=marcas.getMarca()%></td>
-                
-                <td width="100px" class="text-center"><div class="btn-group btn-group-toggle " data-toggle="buttons">
-                        <label class=" btn btn-dark active ">
-                            <a  href="registermark.jsp?id=<%=marcas.getId_marca()%>"></a><i class="fas fa-edit"></i></a>
-                        </label>
-                        <label class="btn btn-danger">
-                            <a  href="deletefront.jsp?id=<%=marcas.getId_marca()%>"></a><i class="fas fa-trash-alt"></i>
-                        </label>
-                        </div></td>
-                        </tr>
-                        <%}%>
-                        </tbody>
-            </table>
+                        <td><%=marcas.getMarca()%></td>
 
+                        <td  class="text-right">
+
+                            <a class=" btn btn-dark active " href="registermark.jsp?id=<%=marcas.getId_marca()%>"><i class="fas fa-edit"></i> </a></a>
+
+
+                            <a class="btn btn-danger"  href="deletemark.jsp?id=<%=marcas.getId_marca()%>"><i class="fas fa-trash-alt"></i> </a>
+
+                        </td>
+                    </tr>
+                    <%}%>
+                </tbody>
+            </table>
+                
+                <!-- COLORES  -->
+<h4> Colores <b>Disponibles</b></h4>
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+
+                        <td width="100px" colspan ="1" ><a class ="btn btn-secondary btn-block" href="addcolor.jsp">Registrar</a></td>
+                    </tr>
+                    <tr class="text-center">
+                        <th scope="col">No.</th>
+                        <th scope="col">Color  </th>
+
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for (color Icolores : colores) {%>
+                    <tr class="text-center"> <td><%=Icolores.getId_color()%></td>
+                        <td><%=Icolores.getColor()%></td>
+
+                        <td  class="text-right">
+
+                            <a class=" btn btn-dark active " href="addcolor.jsp?id=<%=Icolores.getId_color()%>"><i class="fas fa-edit"></i> </a></a>
+
+
+                            <a class="btn btn-danger"  href="deletecolor.jsp?id=<%=Icolores.getId_color()%>"><i class="fas fa-trash-alt"></i> </a>
+
+                        </td>
+                    </tr>
+                    <%}%>
+                </tbody>
+            </table>
         </div>
-    </body>
+</body>
 </html>

@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<% int id ;
+   id = Integer.parseInt(request.getParameter("id"));%>
 <html><head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/floating-labels.css">
@@ -27,15 +29,14 @@
           <a class="nav-link" href="Index.jsp">Catálogo <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Comprar</a>
+          <a class="nav-link" href="pricing.jsp">Comprar</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Opciones</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      
       </form>
     </div>
   </nav>
@@ -49,7 +50,7 @@
         </div>
         <div class="text-center">
             <a href="Index.jsp" type="button" class="btn btn-dark btn-ld">Cancelar</a>
-            <a href="Ondelete.jsp?id=<%%>" type="button" class="btn btn-danger ">Eliminar</a>
+            <a href="ondelete.jsp?id=<%=id%>" type="button" class="btn btn-danger ">Eliminar</a>
         </div>
 </body>
 </form>

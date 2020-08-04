@@ -5,14 +5,50 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Obj.*"%>
+<%@page import="Config.*"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html>
 <%
     int id;
+    int idmarca;
+    int cantidad;
+    String name = "";
+    int model ;
+    int color;
+    int idmark;
+    double price;
+    productoBD producto = new productoBD();
+    almacenBD cant = new almacenBD();
+    // List<marca> marcas = new marcaBD().Indexmarcas();
+      List<producto> marcas = new productoBD().Indexmarcas();
+      List<color> colores = new colorBD().Indexcolores();
 
     if (request.getParameter("id") != null) {
         id = Integer.parseInt(request.getParameter("id"));
+        producto query  = new producto();
+        almacen canti = new almacen();
+        query=producto.find(new producto (id));
+        canti = cant.find(new almacen(id));
+        
+        cantidad=canti.getCantidad();
+        
+        
+        name = query.getNombre();
+        model = query.getModelo();
+        idmarca = query.getId_marca();
+        color = query.getId_color();
+        price=query.getPrecio();
+        
+       
+        
         } else {
         id = 0;
+        model = 0;
+        color = 0;
+        idmarca =0;
+        cantidad=0;
+        price= 0.00;
 
     }
         %>
@@ -21,6 +57,11 @@
     <link rel="stylesheet" href="https://getbootstrap.com/docs/4.5/examples/floating-labels/floating-labels.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>NetNavi - Inicio</title>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+
+    });
+  </script>
     </head>
 
 <body class="d-flex flex-column h-100">
@@ -44,16 +85,16 @@
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        
       </form>
     </div>
   </nav>
     </header>
+    
     <% if(request.getParameter("id")!=null){%>
-                <form class="form-signin" action="OnEdit.jsp" method="POST">
+                <form class="form-signin" action="onedit.jsp" method="POST">
                    <%}else{%>
-                   <form class="form-signin" action="OnNew.jsp" method="POST"><%}%>
+                   <form class="form-signin" action="oninsert.jsp" method="POST"><%}%>
 
 
         <body>
@@ -65,27 +106,28 @@
                        <%if(request.getParameter("id")!=null){%>
                     <input type="hidden" name="id_celular" value="<%=id%>">
                     <%}%>
-                Nombre
-                <div><input type="text" name="Nombre" id="inputname" class="form-control" placeholder="Nombre" required autofocus/> </div>
+              Nombre
+              
+                <div><input type="text" name="Nombre" value="<%=name%>" id="inputname" class="form-control" placeholder="Nombre" required autofocus/> </div>
 
                 <div>Modelo
-                <input type="number" name="Model" class="form-control" placeholder="Modelo" required/>
+                   <input type="text" name="Modelo" value="<%=model%>" id="inputname" class="form-control" placeholder="Modelo" min="0" required autofocus/>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="colores">Color</label>
+                        <label class="input-group-text" for="Colores">Color</label>
                     </div>
-                    <select class="custom-select" id="Colores">
-                        <option selected>Elije un color...</option>
-                        <option value="1">Rojo</option>
-                        <option value="2">Blanco</option>
-                        <option value="3">Morado</option>
-                        <option value="4">Dorado</option>
-                        <option value="5">Amarillo</option>
-                        <option value="6">Gris Espacial</option>
-                        <option value="7">Negro</option>
-                        <option value="8">Café</option>
-                        <option value="9">Tornasol</option>
+                   <select name="Colores" class="custom-select" id="Colores">
+                        <option selected>Elige una color...</option>
+                        <%for (color colors : colores) {
+                            if(colors.getId_color() ==  color  ) {%>
+                        <option value="<%=colors.getId_color()%>" selected ><%=colors.getColor()%></option>    
+                        <%
+                        } else {%>
+                        <option value="<%=colors.getId_color()%>"><%=colors.getColor()%></option> 
+                        <%}
+                        
+}%>
                     </select>
                     
                   
@@ -93,30 +135,29 @@
                                
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="colores">Marca</label>
+                        <label class="input-group-text" for="Marca">Marca</label>
                     </div>
-                    <select class="custom-select" id="Marca">
-                        <option selected>Elije un color...</option>
-                        <option value="1">Samsung Electronics</option>
-                        <option value="2">LG</option>
-                        <option value="3">Huawei</option>
-                        <option value="4">Motorola</option>
-                        <option value="5">Nokia</option>
-                        <option value="6">Alcatel</option>
-                        <option value="7">HTC</option>
-                        <option value="8">Xiaomi</option>
-                        <option value="9">ZTE</option>
-                        <option value="7">CAT</option>
-                        <option value="8">RAZER</option>
-                        <option value="9">ONEPLUS</option>
-                        <option value="7">Apple</option>
-                        <option value="8">Oppo</option>
-                    
+                    <select name="Marca" class="custom-select" id="Marca">
+                        <option selected>Elige una marca...</option>
+                        <%for (producto marks : marcas) {
+                            if(marks.getId_marca() ==  idmarca  ) {%>
+                        <option value="<%=marks.getId_marca()%>" selected ><%=marks.getMarca()%></option>    
+                        <%
+                        } else {%>
+                        <option value="<%=marks.getId_marca()%>"><%=marks.getMarca()%></option> 
+                        <%}
+                        
+}%>
                     </select>
                     
                   
                 </div>
-
+                <div>Precio
+                    <input type="number" step="000.001" name="precio" value="<%=price%>" id="price" class="form-control" placeholder="Precio" min="000.000" required autofocus/>
+                </div>
+                <div>Cantidad
+                    <input type="number"  name="cantidad" value="<%=cantidad%>" id="cantidad" class="form-control"  min="0" required autofocus/>
+                </div>
             </div>
                 <input type="submit" value="Enviar" class="btn btn-dark btn-block"/>
                     <input type="reset" value="Limpiar" class="btn btn-outline-dark btn-block"/>
