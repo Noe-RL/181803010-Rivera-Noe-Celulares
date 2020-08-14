@@ -5,7 +5,9 @@
  */
 package Config;
 
+
 import java.sql.*;
+import java.sql.Date;
 
 /**
  *
@@ -17,7 +19,10 @@ public class connect {
     private static final String usuario = "root";
     private static final String contrasñea = "";
     private static final String bd = "celulares";
+  
     
+     
+
     
     public Connection getConexion() {
         try {

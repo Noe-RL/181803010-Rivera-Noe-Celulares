@@ -27,10 +27,10 @@
                             <a class="nav-link" href="Index.jsp">Catálogo <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Comprar</a>
+                            <a class="nav-link" href="pricing.jsp">Comprar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Opciones</a>
+                            <a class="nav-link disabled" href="stock.jsp" tabindex="-1" aria-disabled="true">Opciones</a>
                         </li>
                     </ul>
                     <form class="form-inline mt-2 mt-md-0">

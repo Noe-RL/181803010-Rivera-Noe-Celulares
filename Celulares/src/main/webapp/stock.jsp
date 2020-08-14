@@ -37,7 +37,7 @@
           <a class="nav-link" href="pricing.jsp">Comprar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="stock.jsp" tabindex="-1" aria-disabled="true">Opciones</a>
+          <a class="nav-link " href="stock.jsp" tabindex="-1" aria-disabled="true">Stock</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
@@ -87,7 +87,7 @@
                        
                         <td><%=compras.getCantidad()%></td>
                         <td>
-                         <a class="btn btn-dark active"  href="editstock.jsp?id=<%=compras.getId_producto()%>"><i class="fas fa-edit"></i> </a>
+                         
                          
                          
                         </td>

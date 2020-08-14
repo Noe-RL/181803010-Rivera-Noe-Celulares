@@ -1,13 +1,17 @@
+<%-- 
+    Document   : store
+    Created on : 4 ago. 2020, 19:42:32
+    Author     : Light
+--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Config.*"%>
 <%@page import="Obj.*"%>
 <%@page import="java.util.*"%>
-<!DOCTYPE html>
 <%
-
-    List<todo> compra = new almacenBD().IndexTodo();
-    
-    almacenBD prueba = new almacenBD();
+    List<compra> fechado = new compraBD().Indexcompra();
+    double subtotal = 0;
+    double total = 0;
+   
 
 %>
 <!DOCTYPE html>
@@ -45,79 +49,63 @@
     </div>
   </nav>
 </header>
-
-        <!-- INICIO DEL CONTENIDO REAL DE LA PAGINA -->
+    
+    
+     <!-- INICIO DEL CONTENIDO REAL DE LA PAGINA -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>') </script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
 
         <div class="container">
 
-            <form action="store.jsp" method="POST">
-            <h4> </h4>
-            <h4> Selecciona <b>Tu compra</b></h4>
-            <table class="table table-striped table-sm">
+            
+            <h5><%out.println("\n ");%></h5>
+            <h4> Historial <b>De Compras Recientes</b></h4>
+            <table class="table table-bordered table-sm">
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">No.</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Color</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
-                        
+                        <th scope="col">Ticket No.</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Detalle</th>
+                        <th scope="col">Total</th>
                     </tr>
                 
                 <tbody>
-                    <%for (todo compras : compra) {
-                    if(compras.getCantidad() !=0){
+                    <%for (compra compras : fechado) {%>                    
+                    <tr class="text-center"><th><%=compras.getId_compra()%></th>
+                        <td><%=compras.getFecha()%></td>
+                        <td>               
+                            <table class="table table-sm">
+                     <thead class="thead-dark">
+                        <tr class="text-center">
+                         <th scope="col">Producto</th>
+                         <th scope="col"> Precio</th>
+                        <th scope="col"> Cantidad</th>
+                        <th scope="col"> Subtotal</th> 
                         
-%>
-                    
-                    <tr class="text-center"><th><%=compras.getId_producto()%></th>
+                        </tr>
+                    <tbody>
+                        <%List<compra> detalle = new compraBD().Detallecompra(new compra(compras.getId_compra()));
+                        for(compra detail : detalle){%>
+                        <tr class="text-center"><th><%=detail.getNombre()%></th>  
+                        <td><%=detail.getComprecio()%></td>
+                        <td><%=detail.getCantidad()%></td>
                         
-                        <td><%=compras.getNombre()%></td>
-                        <td><%=compras.getModelo()%></td>
-                        <td><%=compras.getColor()%></td>
-                        <td><%=compras.getMarca()%></td>
-                        <td>$<%=compras.getPrecio()%></td>
-                        <td width="100px" class="text-left">
-
-                            <input type="number" name="<%=compras.getId_producto()%>" id="inputname" class="form-control"  placeholder="0" min="0" max="<%=compras.getCantidad()%>"  autofocus/> 
-         
-
-                        </td>
-
-
-
+                        <td><%=detail.getPrecio()%></td>
+                        
+                            <%
+                            subtotal = subtotal + detail.getPrecio();
+                            total =  subtotal;
+                                }
+                            subtotal = 0; 
+                             %>
+                        
+                    </tbody>
+                            </table></td>
+                        <td><%=total%></td>
                     </tr>
-
-                    <%}
-}%>
+                    <%}%>
 
                 </tbody>
                 
             </table>
-                   
-                    <div class="progress">
-  <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
-  
-</div>
-                    <div class="text-right">
-                    <input type="submit" value="Comprar" class=" btn btn-success active ">
-                    </div>
-                    
-            </form>
-                    
             
-                
-                               
-                          
-               
-
-
-                        
-                        
-                    
-
-               

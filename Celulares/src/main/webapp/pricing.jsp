@@ -4,27 +4,22 @@
 <%@page import="java.util.*"%>
 <!DOCTYPE html>
 <%
-    
-    List<todo> compra = new almacenBD().IndexTodo();
-   
-    
-        double total = 0;
-     
-   
-        
 
-        almacenBD prueba = new almacenBD();
+    List<todo> compra = new almacenBD().IndexTodo();
+    
+    almacenBD prueba = new almacenBD();
 
 %>
+<!DOCTYPE html>
 <html><head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.5/examples/sign-in/signin.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://getbootstrap.com/docs/4.5/examples/sign-in/signin.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://kit.fontawesome.com/5c4728a2cc.js" crossorigin="anonymous"></script>
         <title>NetNavi - Inicio</title>
     </head>
 
-<body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100">
     <header>
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -41,7 +36,7 @@
           <a class="nav-link" href="pricing.jsp">Comprar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Opciones</a>
+          <a class="nav-link " href="stock.jsp" tabindex="-1" aria-disabled="true">Stock</a>
         </li>
       </ul>
       <form class="form-inline mt-2 mt-md-0">
@@ -57,7 +52,7 @@
 
         <div class="container">
 
-            <form action="pricing.jsp" method="POST">
+            <form action="store.jsp" method="POST">
             <h4> </h4>
             <h4> Selecciona <b>Tu compra</b></h4>
             <table class="table table-striped table-sm">
@@ -74,7 +69,11 @@
                     </tr>
                 
                 <tbody>
-                    <%for (todo compras : compra) {%>
+                    <%for (todo compras : compra) {
+                    if(compras.getCantidad() !=0){
+                        
+%>
+                    
                     <tr class="text-center"><th><%=compras.getId_producto()%></th>
                         
                         <td><%=compras.getNombre()%></td>
@@ -84,7 +83,7 @@
                         <td>$<%=compras.getPrecio()%></td>
                         <td width="100px" class="text-left">
 
-                            <input type="number" name="<%=compras.getId_producto()%>" id="inputname" class="form-control"  min="0" max="<%=compras.getCantidad()%>"  autofocus/> 
+                            <input type="number" name="<%=compras.getId_producto()%>" id="inputname" class="form-control"  placeholder="0" min="0" max="<%=compras.getCantidad()%>"  autofocus/> 
          
 
                         </td>
@@ -93,17 +92,20 @@
 
                     </tr>
 
-                    <%}%>
+                    <%}
+}%>
 
                 </tbody>
                 
             </table>
                    
-                     <%
-               
-                    
-                %>       
-                    <input type="submit" value="Continuar" class=" btn btn-success active ">
+                    <div class="progress">
+  <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
+  
+</div>
+                    <div class="text-right">
+                    <input type="submit" value="Comprar" class=" btn btn-success active ">
+                    </div>
                     
             </form>
                     
